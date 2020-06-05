@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.cos.blog.action.Action;
 import com.cos.blog.model.Board;
 import com.cos.blog.repository.BoardRepository;
+import com.cos.blog.util.HtmlParser;
 
 public class BoardHomeAction implements Action {
 	@Override
@@ -24,16 +25,16 @@ public class BoardHomeAction implements Action {
 				BoardRepository.getInstance();
 		List<Board> boards = boardRepository.findAll();
 		
-		for(Board board : boards) {
-				String preview = board.getContent();
-				preview = preview.substring(0, 2) + "...";
-				board.setContent(preview);
- 			
-		}
 		
-		for (Board board : boards) {
-			
-		}
+		
+		//본문 짧게 가공하기
+		
+		for(Board board : boards) {
+			String preview = HtmlParser.getContentPreview(board.getContent());
+			board.setContent(preview);
+			}
+		
+		
 		
 		
 		
@@ -45,8 +46,10 @@ public class BoardHomeAction implements Action {
 		dis.forward(request, response);
 		
 		
-		//본문 짧게 가공하기
 		
+
+
+
 		
 	}
 }

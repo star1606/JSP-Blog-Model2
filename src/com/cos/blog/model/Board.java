@@ -21,9 +21,9 @@ public class Board {
 	
 	
 	// for문돌려서 꺼낼 필요없이 getTitle에서 해결할 수 있다
-	public String getTitle() {
-		title = title.replace("<", "&lt;").replace(">", "&gt;");
-		return title;
-	}
+//	public String getTitle() {
+//		//title = title.replace("<", "&lt;").replace(">", "&gt;");
+//		return title;
+//	}
 	
 }
