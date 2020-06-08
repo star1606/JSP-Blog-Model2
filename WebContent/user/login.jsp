@@ -33,28 +33,26 @@
 
   <div class="form-group form-check">
     <label class="form-check-label">
-      <input class="form-check-input" type="checkbox" name="remember" value ="${board.userId}"> 아이디 기억하기
-
+    <c:choose>
+    	<c:when test="${empty cookie.remeber}">
+    	  <input class="form-check-input" type="checkbox" name="remember"> 아이디 기억하기
+		</c:when>
+		<c:otherwise>
+			<input class ="form-check-input" type="checkbox" name="remember" checked> 아이디 기억하기
+		</c:otherwise>	
+	</c:choose>
     </label>
   </div>
   <button type="submit" class="btn btn-primary">로그인</button>
 </form>
 </div>
 
-<%
-	String remember ="remember";
-	
-	String cookie = request.getHeader("Cookie");
-if(cookie != null){
-	Cookie cookies[] = request.getCookies();
-	
-// 	<c:if test="${empty sessionScope.principal }">
-// 	<c:redirect url = "/index.jsp"></c:redirect>
-// </c:if>	
-	
-}
 
-%>
+<%-- 	
+ <c:if test="${empty sessionScope.principal }">
+ <c:redirect url = "/index.jsp"></c:redirect>
+ </c:if>		
+--%>
 	
 <!--  체크박스에 체크를 누르면 쿠키가 저장되고  -->
 <!--   -->

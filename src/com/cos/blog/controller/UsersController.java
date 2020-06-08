@@ -15,6 +15,8 @@ import com.cos.blog.action.user.UsersJoinProcAction;
 import com.cos.blog.action.user.UsersLoginAction;
 import com.cos.blog.action.user.UsersLoginProcAction;
 import com.cos.blog.action.user.UsersLogoutAction;
+import com.cos.blog.action.user.UsersUpdateAction;
+import com.cos.blog.action.user.UsersUpdateProcAction;
 import com.cos.blog.action.user.UsersUsernameCheckAction;
 
 // http://localhost:8000/blog/user
@@ -68,10 +70,12 @@ public class UsersController extends HttpServlet {
 			// 유저에 대한 정보를 세션이 들고 있을거다
 			// 쿠키는 클라이언트가 가지고 있는 정보
 			// 세션은 서버가 저장하고 있는정보
-
+			return new UsersUpdateAction();
+	
 		} else if (cmd.equals("updateProc")) {
 			// 회원 수정을 진행 한 후 -> index.jsp로 이동
-
+			return new UsersUpdateProcAction();
+		
 		} else if (cmd.equals("delete")) {
 
 			// 회원 삭제를 진행한 후 -> 로그아웃을 하고 -> index.jsp로 이동
@@ -79,16 +83,21 @@ public class UsersController extends HttpServlet {
 		} else if (cmd.equals("login")) {
 			return new UsersLoginAction(); // 주소노출안되고 포워딩된다
 			// 회원 로그인 페이지로 이동
+		
 		} else if (cmd.equals("LoginProc")) {
 			// 회원 로그인을 수행한후 -> 세션에 등록하고 -> index.jsp로 이동
 			return new UsersLoginProcAction();
+	
 		} else if (cmd.equals("logout")) {
-		
 			return new UsersLogoutAction();
-		} else if (cmd.equals("usernameCheck")) {
 		
+		} else if (cmd.equals("usernameCheck")) {
 			return new UsersUsernameCheckAction();
 		}
+			// 회원삭제를 진행 한 후 -> 로그아웃을 하고 -> index.jsp로 이동
+		
+		
+		
 		return null;
 	}
 

@@ -46,7 +46,7 @@
 
 
 </div>
-
+<!--  
 <script>
 	function deleteById(boardId){
 
@@ -75,8 +75,9 @@
 		}
 
 </script>
+-->
 
-
+<script src = "/blog/js/detail.js"></script>
 
 
 
