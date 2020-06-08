@@ -31,7 +31,7 @@
 
  		   <h4 class ="card-title">${board.title}</h4>  <%-- 중요 :el표현식은 변수명을 적으면 getter가 호출된다 --%>
 		   <p class = "card-text">${board.content}</p>	<%-- gettitle()함수 호출임 --%>
-	 	   <a href="#" class="btn btn-primary">상세보기</a>
+	 	   <a href="/blog/board?cmd=detail&id=${board.id}" class="btn btn-primary">상세보기</a>
 	    </div>
 	</div>
 	

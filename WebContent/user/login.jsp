@@ -27,17 +27,36 @@
     <div class="invalid-feedback">Please fill out this field.</div>
   </div>
   
+  
+  
+ 
+
   <div class="form-group form-check">
     <label class="form-check-label">
-      <input class="form-check-input" type="checkbox" name="remember"> 아이디 기억하기
+      <input class="form-check-input" type="checkbox" name="remember" value ="${board.userId}"> 아이디 기억하기
 
     </label>
   </div>
   <button type="submit" class="btn btn-primary">로그인</button>
 </form>
 </div>
+
+<%
+	String remember ="remember";
 	
+	String cookie = request.getHeader("Cookie");
+if(cookie != null){
+	Cookie cookies[] = request.getCookies();
+	
+// 	<c:if test="${empty sessionScope.principal }">
+// 	<c:redirect url = "/index.jsp"></c:redirect>
+// </c:if>	
+	
+}
 
-
+%>
+	
+<!--  체크박스에 체크를 누르면 쿠키가 저장되고  -->
+<!--   -->
 
 <%@ include file = "../include/footer.jsp" %>

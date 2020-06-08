@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cos.blog.db.DBConn;
+import com.cos.blog.dto.DetailResponseDto;
 import com.cos.blog.model.Board;
 import com.cos.blog.model.Users;
 
@@ -55,14 +56,17 @@ public class BoardRepository {
 		return -1; // 실패
 	}
 
-	public int update(Board Board) {
-		final String SQL = "";
+	public int update(Board board) {
+		final String SQL = "UPDATE board SET title = ?, content = ? WHERE id = ?";
 
 		try {
 			conn = DBConn.getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			// 물음표 완성하기
-
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getContent());
+			pstmt.setInt(3, board.getId());
+			
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,13 +80,15 @@ public class BoardRepository {
 	}
 
 	public int deleteById(int id) { // 객체 받을 필요가 없다 id만 있으면됨
-		final String SQL = "";
+		System.out.println("BoardRepository: id : " + id);
+		final String SQL = "DELETE FROM board WHERE id= ?";
 
 		try {
 			conn = DBConn.getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			// 물음표 완성하기
-
+			
+			pstmt.setInt(1, id);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,17 +138,45 @@ public class BoardRepository {
 	}
 
 	// 사용자의 select
-	public Board findById(int id) { // id만 찾을거니까 매개변수가 필요없다
-		final String SQL = "";
-		Board board = new Board();
+	public DetailResponseDto findById(int id) { // id만 찾을거니까 매개변수가 필요없다
+		StringBuilder sb = new StringBuilder();
+		sb.append("select b.id, b.userId, b.title, b.content, b.readCount, b.createDate, u.username ");
+		sb.append("FROM board b INNER JOIN users u ");
+		sb.append("ON b.userId = u.id ");
+		sb.append("WHERE b.id = ? ");
+		
+		// 데이터 트랜스퍼 오브젝트
+		
+		final String SQL = sb.toString();
+		DetailResponseDto dto = null;
+		
 		try {
 			conn = DBConn.getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			// 물음표 완성하기
-
+			pstmt.setInt(1, id);
+		
 			// if 돌려서 rs -> 오브젝트에 집어 넣기
-
-			return board;
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto = new DetailResponseDto();  // null을 위에 미리 해주고 new 늦게 해준다
+				
+				//Board board = new Board();
+				//board.setId(rs.getInt("b.id"));
+				Board board = Board.builder()
+						.id(rs.getInt(1))
+						.userId(rs.getInt(2))
+						.title(rs.getString(3))
+						.content(rs.getString(4))
+						.readCount(rs.getInt(5))
+						.createDate(rs.getTimestamp(6))
+						.build();
+				dto.setBoard(board);
+				dto.setUsername(rs.getString(7));
+				
+			}	
+			return dto;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(TAG + "findById: " + e.getMessage());
