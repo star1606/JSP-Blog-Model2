@@ -3,7 +3,7 @@
 <%@ include file="../include/nav.jsp"%>
 
 <div class="container">
-	<form action="/blog/user?cmd=updateProc" method="POST" class="was-validated">
+	<form action="/blog/user?cmd=updateProc" method="POST" class="was-validated" onsubmit="return validate()">
 
 		<input type="hidden" name="id" value="${sessionScope.principal.id}" />
 		<div class="form-group">

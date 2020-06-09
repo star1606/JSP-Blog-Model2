@@ -5,9 +5,9 @@
 <%@ include file = "include/nav.jsp" %>    <!-- 같은 위치에 있으니까 -->
 
 <c:forEach var="board" items="${boards}">
-<div class="container">	
-	<div class="card m-2" style="width:100%">
-  
+	<div class="container">	
+		<div class="card m-2" style="width:100%">
+  	
 <!-- 	  	<div class="card-body"> -->
 <!-- 	       <h4 class="card-title">제목이 들어가는 자리</h4> -->
 <!-- 	       <p class="card-text">본문 미리보기</p> -->
@@ -36,6 +36,13 @@
 	</div>
 	
 </c:forEach>
+<br/>
+	<ul class="pagination justify-content-center" >
+	  <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+	  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+	</ul>
+
+
 </div>
 	
 

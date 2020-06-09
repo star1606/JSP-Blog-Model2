@@ -23,9 +23,11 @@ public class BoardHomeAction implements Action {
 		
 		BoardRepository boardRepository =
 				BoardRepository.getInstance();
+	
+		// 2. 3건만 페이징하여 가져오기
 		List<Board> boards = boardRepository.findAll();
 		
-		
+		int	readCount = boardRepository.readCountUpdate(readCount);
 		
 		//본문 짧게 가공하기
 		

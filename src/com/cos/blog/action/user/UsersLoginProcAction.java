@@ -16,6 +16,7 @@ import com.cos.blog.action.Action;
 import com.cos.blog.model.RoleType;
 import com.cos.blog.model.Users;
 import com.cos.blog.repository.UsersRepository;
+import com.cos.blog.util.SHA256;
 import com.cos.blog.util.Script;
 
 public class UsersLoginProcAction implements Action {
@@ -33,8 +34,9 @@ public class UsersLoginProcAction implements Action {
 
 		// key값오니까 반환가짐
 		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-
+		String rawpassword = request.getParameter("password");
+		String password = SHA256.encodeSha256(rawpassword);
+		
 		// 로그인 함수 호출
 		UsersRepository usersRepository = UsersRepository.getInstance();
 		Users user = usersRepository.findByUsernameAndPassword(username, password); // ID passowrd 넘긴다, 간단한거라 오브젝트로 해서 옮길필요는없다
@@ -59,7 +61,7 @@ public class UsersLoginProcAction implements Action {
 				
 			}
 			
-			Script.href("로그인성공", "/blog/board?cmd=home", response);
+			Script.href("로그인성공", "/blog/index.jsp", response);
 			
 		}else {
 			Script.back("로그인 실패", response);

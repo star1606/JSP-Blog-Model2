@@ -32,8 +32,12 @@ public class BoardDetailAction implements Action {
 		DetailResponseDto dto =
 				boardRepository.findById(id);
 		
+		//접속한걸 셀 수 있는방법?
+		
 		if(dto != null) {
 			
+			int readCount = boardRepository.readCountUpdate(null);
+			readCount++;
 			// 유튜브 파싱하기
 			String content = dto.getBoard().getContent();
 			content = HtmlParser.getContentYoutube(content);
