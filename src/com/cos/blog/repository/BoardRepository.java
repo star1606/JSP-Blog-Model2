@@ -1,6 +1,7 @@
 package com.cos.blog.repository;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -36,14 +37,14 @@ public class BoardRepository {
 	// 1. 어떻게 쿼리를 짜면 1씩 readCount가 증가할까?, 시퀀스가 맞나? , 다른 필드가 필요할까
 	// 2. 상세보기를 눌러서 1을증가하게 만들 수 있는 로직은뭘까?
 	// 3. 
-	public int readCountUpdate(Board board) {
-		final String SQL = "INSERT INTO board readCount VALUES(board_seq.nextval)";
+	public int updateReadCount(int id) {
+		final String SQL = "UPDATE board SET readCount = readCount + 1 WHERE id =?";
 
 		try {
 			conn = DBConn.getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			// 물음표 완성하기
-			pstmt.setInt(1, board.getReadCount());
+			pstmt.setInt(1, id);
 		
 			
 			return pstmt.executeUpdate();
@@ -171,16 +172,17 @@ public class BoardRepository {
 	
 	public List<Board> findAll(int page) { // 다 찾을거니까 매개변수가 필요없다
 		StringBuilder sb = new StringBuilder();
-		sb.append("select /*+ INDEX_DESC(BOARD SYS_C008308)*/id, ");
+		sb.append("select /*+ INDEX_DESC(BOARD SYS_C008308)*/id,");
 		sb.append("userId, title, content, readCount, createDate ");
 		sb.append("from board ");
-		sb.append("OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY; ");
-		final String SQL = "SELECT * FROM board ORDER BY id DESC";
+		sb.append("OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY");
+		
+		final String SQL = sb.toString();
 		List<Board> boards = new ArrayList<>();
 		try {
 			conn = DBConn.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-
+			pstmt.setInt(1, page*3);
 			// while 돌려서 rs -> 오브젝트에 집어 넣기
 			rs = pstmt.executeQuery();
 			while (rs.next()) {

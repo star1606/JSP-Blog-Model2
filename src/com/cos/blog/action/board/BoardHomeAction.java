@@ -16,7 +16,7 @@ import com.cos.blog.util.HtmlParser;
 public class BoardHomeAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
+			int page = Integer.parseInt(request.getParameter("page"));
 		// 1.DB연결해서 Board 목록 다 불러와서
 		// 2.Request에 담고 
 		// 3.이동 home.jsp
@@ -25,9 +25,9 @@ public class BoardHomeAction implements Action {
 				BoardRepository.getInstance();
 	
 		// 2. 3건만 페이징하여 가져오기
-		List<Board> boards = boardRepository.findAll();
+		List<Board> boards = boardRepository.findAll(page);
 		
-		int	readCount = boardRepository.readCountUpdate(readCount);
+	
 		
 		//본문 짧게 가공하기
 		

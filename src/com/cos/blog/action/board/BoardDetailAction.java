@@ -33,11 +33,19 @@ public class BoardDetailAction implements Action {
 				boardRepository.findById(id);
 		
 		//접속한걸 셀 수 있는방법?
+		// 조회수 증가가 상세보기 되기 전에 실행되는 것이 좋음
+		int result = boardRepository.updateReadCount(id);
+		
+		if(result != 1) {
+				Script.back("서버 오류!", response);
+				return;
+		}
+		
+		
 		
 		if(dto != null) {
 			
-			int readCount = boardRepository.readCountUpdate(null);
-			readCount++;
+			
 			// 유튜브 파싱하기
 			String content = dto.getBoard().getContent();
 			content = HtmlParser.getContentYoutube(content);
