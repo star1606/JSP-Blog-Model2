@@ -34,7 +34,7 @@
   <div class="form-group form-check">
     <label class="form-check-label">
     <c:choose>
-    	<c:when test="${empty cookie.remeber}">
+    	<c:when test="${empty cookie.remember}">
     		  <input class="form-check-input" type="checkbox" name="remember"> 아이디 기억하기
 		</c:when>
 		<c:otherwise>

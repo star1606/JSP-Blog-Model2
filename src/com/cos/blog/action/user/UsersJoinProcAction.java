@@ -13,6 +13,7 @@ import com.cos.blog.action.Action;
 import com.cos.blog.model.RoleType;
 import com.cos.blog.model.Users;
 import com.cos.blog.repository.UsersRepository;
+import com.cos.blog.util.SHA256;
 import com.cos.blog.util.Script;
 
 
@@ -45,7 +46,8 @@ public class UsersJoinProcAction implements Action {
 		//1. 파라미터 받기. ( 폼태그데이터-> x-www-form-urlencoded 라는 MIME타입 key= value)
 		//2. 클라이언트가 쓴 내용들을 get으로 받아오는것
 		String username = request.getParameter("username"); // join화면에 ,required론 부족하다 왜냐하면 포스트맨이 공격할 수 있다 null값을 
-		String password = request.getParameter("password");
+		String rawpassword = request.getParameter("password");
+		String password = SHA256.encodeSha256(rawpassword);
 		String email = request.getParameter("email");
 		String address = request.getParameter("address");
 		String userRole = RoleType.USER.toString();
