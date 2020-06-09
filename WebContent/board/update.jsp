@@ -21,7 +21,7 @@
 	
 		<div class="form-group">
 			<label for="content">Content:</label>
-			<textarea class="form-control" rows="5" id="content" name="content">
+			<textarea id="summernote" class="form-control" rows="5" id="content" name="content">
 				${dto.board.content}
 			</textarea>
 		</div>

@@ -132,28 +132,25 @@ public class UsersRepository {
 	}
 
 	public int update(Users user) {
-		final String SQL = "UPDATE users SET password =?, email=?, WHERE id=?";
-
+		final String SQL = "UPDATE users SET password = ?, email = ?, address = ? WHERE id = ?";
+		
 		try {
 			conn = DBConn.getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			// 물음표 완성하기
-
 			pstmt.setString(1, user.getPassword());
 			pstmt.setString(2, user.getEmail());
 			pstmt.setString(3, user.getAddress());
 			pstmt.setInt(4, user.getId());
-			
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println(TAG + "update: " + e.getMessage());
-
+			System.out.println(TAG+"update : "+e.getMessage());
 		} finally {
 			DBConn.close(conn, pstmt);
 		}
 
-		return -1; // 실패
+		return -1;
 	}
 
 	public int deleteById(int id) { // 객체 받을 필요가 없다 id만 있으면됨
