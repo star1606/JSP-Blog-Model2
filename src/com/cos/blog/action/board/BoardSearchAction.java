@@ -26,6 +26,8 @@ public class BoardSearchAction implements Action {
 					}
 			// 검증체크해야됨 그리고 return 안해주면 다 탄다
 		
+			
+			// int 여러개가 모였으니 int 클래스자료형인 Integer로 나옴.
 			int page = Integer.parseInt(request.getParameter("page")); // 페이지는 인증필요.
 			String keyword = request.getParameter("keyword");
 			//같이 넘겨준다
