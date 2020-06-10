@@ -66,7 +66,7 @@
 	  </c:when>
 	  
 	  <c:otherwise>
-	  		<c:set var = "pageNext" value ="/blog/board?cmd=home&page=${param.page+1}&keyword=${param.keyword }" />
+	  		<c:set var = "pageNext" value ="/blog/board?cmd=search&page=${param.page+1}&keyword=${param.keyword }" />
 	  </c:otherwise>	
 	
 	</c:choose>
@@ -80,7 +80,7 @@
 	  </c:when>
 	  
 	  <c:otherwise>
-	  		<c:set var = "pagePre" value ="/blog/board?cmd=home&page=${param.page-1}&keyword=${param.keyword }" />
+	  		<c:set var = "pagePre" value ="/blog/board?cmd=search&page=${param.page-1}&keyword=${param.keyword }" />
 	  </c:otherwise>	
 	
 	</c:choose>
