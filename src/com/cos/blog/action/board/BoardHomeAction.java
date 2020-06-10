@@ -1,6 +1,7 @@
 package com.cos.blog.action.board;
 
 import java.io.IOException;
+
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -34,13 +35,22 @@ public class BoardHomeAction implements Action {
 		for(Board board : boards) {
 			String preview = HtmlParser.getContentPreview(board.getContent());
 			board.setContent(preview);
-			}
+		}
 		
 		
 		
 		
 		
 		request.setAttribute("boards", boards);
+		
+		// 마지막 페이지 확인 로직
+		int count = boardRepository.count();
+		int lastPage = (count-1)/3;
+		double currenPercent = (double)(page)/(lastPage)*100;
+		
+		request.setAttribute("lastPage", lastPage);
+		request.setAttribute("currentPercent", currenPercent);
+		
 		
 		
 		RequestDispatcher dis = 

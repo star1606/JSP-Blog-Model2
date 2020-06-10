@@ -41,14 +41,33 @@
 	<!--  disabled -->
 	<ul class="pagination justify-content-center" >
 	
+	<c:choose> 
+	 
+	  <c:when test="${param.page == 0}">
+	  	<li class="page-item disabled"><a class="page-link" href="/blog/board?cmd=home&page=${param.page-1}">Previous</a></li>	  			  
+	  </c:when>
+	  
+	  <c:otherwise>
+	  	<li class="page-item"><a class="page-link" href="/blog/board?cmd=home&page=${param.page-1}">Previous</a></li>
+	  
+	  </c:otherwise>	
+	</c:choose>
 	
-	  <li class="page-item"><a class="page-link" href="/blog/board?cmd=home&page=${param.page-1}">Previous</a></li>	
-	  <li class="page-item"><a class="page-link" href="/blog/board?cmd=home&page=${param.page+1}">Next</a></li>
+	<c:choose>
+		<c:when test="${lastPage == param.page }">
+			<li class="page-item disabled"><a class="page-link" href="/blog/board?cmd=home&page=${param.page+1}">Next</a></li>
+		</c:when>
+	  	<c:otherwise>
+	  		<li class="page-item"><a class="page-link" href="/blog/board?cmd=home&page=${param.page+1}">Next</a></li>
+	  	</c:otherwise>	
+	</c:choose>
+	
 	</ul>
 	
+  <!--  123 1  456 2 789 3   10 11 12 4 -->
 
-</div>
 	
+<!--  표현식 문법은 제대로 했는가 if문은 제대로 썼을까? -->
 
-
+<script src="/blog/js/dontnew.js"></script>
 <%@ include file = "include/footer.jsp" %>

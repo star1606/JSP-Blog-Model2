@@ -33,6 +33,35 @@ public class BoardRepository {
 
 	// CRUD 만들기
 	
+	public int count() {
+		final String SQL = "SELECT count(*) FROM board";
+		
+		try {
+				conn = DBConn.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					return rs.getInt(1);
+				}
+			
+		} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(TAG + "count: " + e.getMessage());
+		} finally {
+				DBConn.close(conn, pstmt, rs);
+		}
+		
+		return -1;
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	// 1. 어떻게 쿼리를 짜면 1씩 readCount가 증가할까?, 시퀀스가 맞나? , 다른 필드가 필요할까
 	// 2. 상세보기를 눌러서 1을증가하게 만들 수 있는 로직은뭘까?
