@@ -33,6 +33,39 @@ public class BoardRepository {
 
 	// CRUD 만들기
 	
+	
+	
+	
+	
+	
+	public int count(String keyword) {
+		final String SQL = "SELECT count(*) FROM board WHERE title LIKE ? or content LIKE ?";
+		
+		try {
+				conn = DBConn.getConnection();
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, "%"+ keyword +"%");
+				pstmt.setString(2, "%"+ keyword +"%");
+			
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					return rs.getInt(1);
+				}
+			
+		} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(TAG + "count(keyword): " + e.getMessage());
+		} finally {
+				DBConn.close(conn, pstmt, rs);
+		}
+		
+		return -1;
+		
+		
+	}
+	
+	
+	
 	public int count() {
 		final String SQL = "SELECT count(*) FROM board";
 		
@@ -164,6 +197,58 @@ public class BoardRepository {
 	}
 
 	// 관리자 계정으로 다 찾는 것...
+	
+	
+	
+	
+	
+	
+	public List<Board> findAll(int page, String keyword) { // 다 찾을거니까 매개변수가 필요없다
+		StringBuilder sb = new StringBuilder();
+		sb.append("select /*+ INDEX_DESC(BOARD SYS_C008308)*/id,");
+		sb.append("userId, title, content, readCount, createDate ");
+		sb.append("from board ");
+		sb.append("where title like ? or content like ? ");
+		sb.append("OFFSET ? ROWS FETCH NEXT 3 ROWS ONLY");
+		
+		System.out.println(sb.toString());  //쿼리 테스트
+		final String SQL = sb.toString();
+		List<Board> boards = new ArrayList<>();
+		try {
+			conn = DBConn.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setInt(3, page*3);
+			// while 돌려서 rs -> 오브젝트에 집어 넣기
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Board board = new Board(
+						rs.getInt("id"),
+						rs.getInt("userId"),
+						rs.getString("title"),
+						rs.getString("content"),
+						rs.getInt("readCount"),
+						rs.getTimestamp("createDate")
+
+				);
+				boards.add(board);
+				//System.out.println(boards.add(board));
+			}
+
+			return boards;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(TAG + "findAll(page, keyword): " + e.getMessage());
+
+		} finally {
+			DBConn.close(conn, pstmt, rs);
+		}
+
+		return null;
+	}
+	
+		
 	public List<Board> findAll() { // 다 찾을거니까 매개변수가 필요없다
 		final String SQL = "SELECT * FROM board ORDER BY id DESC";
 		List<Board> boards = new ArrayList<>();
@@ -231,7 +316,7 @@ public class BoardRepository {
 			return boards;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println(TAG + "findAll: " + e.getMessage());
+			System.out.println(TAG + "findAll(int page): " + e.getMessage());
 
 		} finally {
 			DBConn.close(conn, pstmt, rs);
