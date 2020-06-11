@@ -6,12 +6,12 @@
 
 <div class = "container">
 
-	<div class="col-md-12 m-2">
-	  <form class="form-inline justify-content-end" action="/blog/board">
+	<div class="m-2">
+	  <form class="form-inline d-flex justify-content-end" action="/blog/board">
 	  	<input type ="hidden" name="cmd" value="search" />
 	  	<input type="hidden" name="page" value="0" />
 	    <input type="text" class="form-control mr-sm-2" name="keyword" placeholder="Search">
-	    <button class="btn btn-primary" type="submit">검색</button>
+	    <button class="btn btn-primary m-1" type="submit">검색</button>
 	  </form>
 	
 	</div>
