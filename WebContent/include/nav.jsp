@@ -32,7 +32,7 @@
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>	
 
-<link href="/blog/css/styles.css" rel="stylesheet">		
+<link href="/blog/css/style.css" rel="stylesheet">		
 	
 </head>
 <body>
@@ -43,10 +43,9 @@
 			data-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		<div class="justify-content-between collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
-
-
+	
 				<c:choose>
 					<c:when test="${empty sessionScope.principal }">
 						<li class="nav-item"><a class="nav-link"
@@ -65,7 +64,8 @@
 
 					</c:otherwise>
 				</c:choose>
-
+				</ul>
+				
 
 
 
@@ -90,7 +90,23 @@
         <a class="nav-link" href="/blog/user?cmd=logout">로그아웃</a> 
       </li>
     	<% } %> --%>
+			
+			
+			
+			<ul class = "navbar-nav">
+			<c:if test="${not empty sessionScope.principal }">
+				<li class = "nav-item">
+					<a href="/blog/user?cmd=profileUpload"><%-- 사진클릭하면 프로필로간다 --%>
+						<img style ="border-radius:20px" onerror="this.src='/blog/img/userProfile.png'" src="${sessionScope.principal.userProfile}" width = "40px" height="40px"/>
+					</a>
+				</li>							
+			</c:if>
+			
 			</ul>
+			
+			
+			
+			
 		</div>
 	</nav>
 	<br>
