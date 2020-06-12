@@ -23,7 +23,7 @@
 		<%-- 로그인한사람하고 board id로 직접 쓴사람이 수정할 수 있게 설정--%>
 	<a href="/blog/board?cmd=update&id=${detailDto.boardDto.board.id}" class="btn btn-warning">수정</a>
 		
-		<button class="btn btn-danger" onclick="deleteById(${detailDto.boardDto.board.id} )">삭제</button>
+		<button class="btn btn-danger" onclick="deleteByI	d(${detailDto.boardDto.board.id} )">삭제</button>
 		
 	</c:if>
 	<br />
@@ -37,7 +37,7 @@
 	</h3>
 	<hr />
 	<div class="form-group">
-		<div class="m-2">${detailDto.boardDto.board.content}</div>
+		<div class="container p-3 my-3 border">${detailDto.boardDto.board.content}</div>
 	</div>
 
 	<hr />
@@ -51,13 +51,13 @@
 				<div class="panel panel-info">
 					<div class="panel-heading m-2"><b>Comment</b></div>
 					<div class="panel-body">
-						<textarea class="form-control" placeholder="write a comment..." rows="3"></textarea>
+						<textarea id = "reply__write__form" class="form-control" placeholder="write a comment..." rows="3"></textarea>
 						<br>
-						<button type="button" class="btn btn-primary pull-right">댓글쓰기</button>
+						<button onclick="replyWrite(${detailDto.boardDto.board.id}, ${sessionScope.principal.id })" type="button" class="btn btn-primary pull-right">댓글쓰기</button>
 						<div class="clearfix"></div>
 						<hr />
 						<!-- 댓글 리스트 시작-->
-						<ul class="media-list">
+						<ul id="reply__list" class="media-list">
 						
 							<c:forEach var="replyDto" items="${detailDto.replyDtos}">
 								<!-- 댓글 아이템 -->
@@ -85,7 +85,7 @@
 	<!-- </div> 네임이 없으면 전송을 못한다 .text() , val, html -->
 	<!--  댓글 박스 끝 -->
 
-</div>
+
 <!--  
 <script>
 	function deleteById(boardId){
@@ -116,6 +116,14 @@
 
 </script>
 -->
+
+
+
+<script>
+	
+	
+
+</script>
 
 <script src = "/blog/js/detail.js"></script>
 

@@ -129,7 +129,8 @@ public class BoardRepository {
 	
 	
 	public int save(Board board) {
-		final String SQL = "INSERT INTO board(id, userId, title, content, readCount, createDate) VALUES(board_seq.nextval, ?, ?, ?, ?, sysdate)";
+		final String SQL = "INSERT INTO board(id, userId, title, content, readCount, createDate) "
+				+ "VALUES(board_seq.nextval, ?, ?, ?, ?, sysdate)";
 
 		try {
 			conn = DBConn.getConnection();
@@ -144,7 +145,7 @@ public class BoardRepository {
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println(TAG + "save: " + e.getMessage());
+			System.out.println(TAG + "save(Board board) " + e.getMessage());
 
 		} finally {
 			DBConn.close(conn, pstmt);
