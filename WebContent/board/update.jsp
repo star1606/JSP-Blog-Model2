@@ -12,17 +12,17 @@
 
 <div class= "container">	<!-- get 하면 body에 데이터 못들고감 -->
 	<form action="/blog/board?cmd=updateProc" method="POST">
-		<input type = "hidden" value ="${dto.board.id}" name ="id"/>
+		<input type = "hidden" value ="${boardDto.board.id}" name ="id"/>
 		
 		<div class="form-group">
 			<label for="title">Title:</label>
-			<input value="${dto.board.title}" type="text" class="form-control" placeholder="title" id="title" name="title">
+			<input value="${boardDto.board.title}" type="text" class="form-control" placeholder="title" id="title" name="title">
 		</div>
 	
 		<div class="form-group">
 			<label for="content">Content:</label>
 			<textarea id="summernote" class="form-control" rows="5" id="content" name="content">
-				${dto.board.content}
+				${boardDto.board.content}
 			</textarea>
 		</div>
 						

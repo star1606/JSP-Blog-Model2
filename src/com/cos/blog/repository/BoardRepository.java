@@ -2,15 +2,17 @@ package com.cos.blog.repository;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.cos.blog.db.DBConn;
+import com.cos.blog.dto.BoardResponseDto;
 import com.cos.blog.dto.DetailResponseDto;
 import com.cos.blog.model.Board;
-import com.cos.blog.model.Users;
+
 
 // DAO
 
@@ -326,17 +328,16 @@ public class BoardRepository {
 	}
 
 	// 사용자의 select
-	public DetailResponseDto findById(int id) { // id만 찾을거니까 매개변수가 필요없다
+	public BoardResponseDto findById(int id) { // id만 찾을거니까 매개변수가 필요없다
 		StringBuilder sb = new StringBuilder();
 		sb.append("select b.id, b.userId, b.title, b.content, b.readCount, b.createDate, u.username ");
 		sb.append("FROM board b INNER JOIN users u ");
 		sb.append("ON b.userId = u.id ");
 		sb.append("WHERE b.id = ? ");
-		
+	
 		// 데이터 트랜스퍼 오브젝트
-		
 		final String SQL = sb.toString();
-		DetailResponseDto dto = null;
+		BoardResponseDto boardDto = null;
 		
 		try {
 			conn = DBConn.getConnection();
@@ -347,7 +348,7 @@ public class BoardRepository {
 			// if 돌려서 rs -> 오브젝트에 집어 넣기
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				dto = new DetailResponseDto();  // null을 위에 미리 해주고 new 늦게 해준다
+				boardDto = new BoardResponseDto();  // null을 위에 미리 해주고 new 늦게 해준다
 				
 				//Board board = new Board();
 				//board.setId(rs.getInt("b.id"));
@@ -359,11 +360,11 @@ public class BoardRepository {
 						.readCount(rs.getInt(5))
 						.createDate(rs.getTimestamp(6))
 						.build();
-				dto.setBoard(board);
-				dto.setUsername(rs.getString(7));
+				boardDto.setBoard(board);
+				boardDto.setUsername(rs.getString(7));
 				
 			}	
-			return dto;
+			return boardDto;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
