@@ -2,8 +2,6 @@ package com.cos.blog.controller;
 
 import java.io.IOException;
 
-
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cos.blog.action.Action;
-
+import com.cos.blog.action.reply.ReplyDeleteProcAction;
 import com.cos.blog.action.reply.ReplyWriteProcAction;
 
 
@@ -60,6 +58,9 @@ public class ReplyController extends HttpServlet {
 			//회원가입 페이지로 이동
 			return new ReplyWriteProcAction();  // 홈액션의 목적 보드의 목록을 다 뿌린다.
 		
+		} else if(cmd.equals("deleteProc")) {
+			return new ReplyDeleteProcAction();
+			
 		}
 		return null;
 	}

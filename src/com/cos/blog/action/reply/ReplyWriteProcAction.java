@@ -2,6 +2,7 @@ package com.cos.blog.action.reply;
 
 import java.io.BufferedReader;
 
+
 import java.io.IOException;
 import java.util.List;
 
@@ -51,12 +52,14 @@ public class ReplyWriteProcAction implements Action {
 			Script.outJson(result+"", response);
 			
 		}
-		// 이거 설명 reply List로 만들어서 
+		// 이거 설명  reply List로 만들어서 
 		// 맨처음 reply boardId를 가져와서 
 		// findAll 메소드 실행 select 문을 실행한다
-		// 그것을 replyDtos에 담고 오브젝트를 JSON으로 만들고 
+		//댓글이 여러개니까 list로 담는것임
+		// 그것을 replyDtos에 담고 / 배열의 내용들을 제이슨으로 바꾸고 
+		// JSON의 내용을 스트링으로 받고 그걸 outJSON메소드 실행
+		// 스크립트 메소드로인하여 response.getWriter함
 		// 객체를 가지고 나옴 이 다음에 추가된 내용을 댓글에 붙이는거고
-		// 
 		// 나중에 ajax로 확인된것과 
 		
 		// DB에 밀어 넣기만 하면 된다.

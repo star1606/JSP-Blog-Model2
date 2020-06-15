@@ -86,13 +86,13 @@ public class ReplyRepository {
 	}
 	
 	public int deleteById(int id) {   //객체 받을 필요가 없다 id만 있으면됨
-		final String SQL = "";
+		final String SQL = "DELETE FROM reply WHERE id = ?";
 
 		try {
 			conn = DBConn.getConnection();
 			pstmt = conn.prepareStatement(SQL);
 			// 물음표 완성하기
-
+			pstmt.setInt(1, id);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

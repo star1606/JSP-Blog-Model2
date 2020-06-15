@@ -2,16 +2,21 @@ package com.cos.blog.action.board;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
-
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.cos.blog.action.Action;
-
+import com.cos.blog.dto.BoardResponseDto;
+import com.cos.blog.dto.DetailResponseDto;
+import com.cos.blog.dto.ReplyResponseDto;
 import com.cos.blog.repository.BoardRepository;
+import com.cos.blog.repository.ReplyRepository;
+import com.cos.blog.util.HtmlParser;
 import com.cos.blog.util.Script;
 
 public class BoardDeleteAction implements Action {
@@ -20,26 +25,62 @@ public class BoardDeleteAction implements Action {
 
 		
 		// 0번 인증 확인
-				HttpSession session = request.getSession();
-				if(session.getAttribute("principal") == null) {
-					Script.getMessage("잘못된 접근입니다.", response);
-					return; //여기서 return이 었으면 코드를 아래를 타고 내려간다.
-				}
+				
 
 				if
 				(
 					request.getParameter("id") == null ||
 					request.getParameter("id").equals("")			
 				) {
+					Script.back("잘못된 접근입니다.", response);
 					return;
 				}
 
-				int id = Integer.parseInt(request.getParameter("id"));
+				int boardId = Integer.parseInt(request.getParameter("id"));
 
 				BoardRepository boardRepository = 
 						BoardRepository.getInstance();
-				int result = boardRepository.deleteById(id);
+				ReplyRepository replyRepository =
+						ReplyRepository.getInstance();
 				
-				Script.outText(result+"", response);
+				// 조회수 증가가 상세보기가 되기 전에 실행되는 것이 좋음
+				int result = boardRepository.deleteById(boardId);
+				
+				if(result != 1) {
+					Script.back("서버 오류!", response);
+					return;
+				}
+				
+				// Board, User(해당 게시물의 글과 작성자)
+				BoardResponseDto boardDto =
+						boardRepository.findById(boardId);
+				
+				
+				
+				//Reply , User (해당 게시물의 댓글과 댓글의 작성자) 복수
+				List<ReplyResponseDto> replyDtos = 
+						replyRepository.findAll(boardId);
+				
+				DetailResponseDto detailDto =
+						DetailResponseDto.builder()
+								.boardDto(boardDto)
+								.replyDtos(replyDtos)
+								.build();
+			
+				if(detailDto != null) {
+					//유튜브 파싱하기
+					String content = boardDto.getBoard().getContent();
+					content = HtmlParser.getContentYoutube(content);
+					boardDto.getBoard().setContent(content);
+					
+					request.setAttribute("detailDto", "detailDto");
+					RequestDispatcher dis =
+							request.getRequestDispatcher("board/detail.jsp");
+					dis.forward(request, response);
+				
+				} else {
+					Script.back("잘못된 접근입니다.", response);
+				}
+				
 			}
 		}

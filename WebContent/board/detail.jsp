@@ -23,7 +23,7 @@
 		<%-- 로그인한사람하고 board id로 직접 쓴사람이 수정할 수 있게 설정--%>
 	<a href="/blog/board?cmd=update&id=${detailDto.boardDto.board.id}" class="btn btn-warning">수정</a>
 		
-		<button class="btn btn-danger" onclick="deleteByI	d(${detailDto.boardDto.board.id} )">삭제</button>
+		<button class="btn btn-danger" onclick="deleteById(${detailDto.boardDto.board.id} )">삭제</button>
 		
 	</c:if>
 	<br />
@@ -61,13 +61,18 @@
 						
 							<c:forEach var="replyDto" items="${detailDto.replyDtos}">
 								<!-- 댓글 아이템 -->
-								<li class="media">	
+								<li id ="reply-${replyDto.reply.id}" class="media">	
 									<img onerror="this.src='/blog/image/userProfile.png'" src="${replyDto.userProfile}" alt="" class="img-circle">		
 									<div class="media-body">
 										<strong class="text-primary">${replyDto.username}</strong>
 										<p>
 											${replyDto.reply.content}
 										</p>
+									</div>
+									<div class= "m-2">									
+										<c:if test= "${replyDto.reply.userId eq sessionScope.principal.id}">
+											<i onclick="replyDelete(${replyDto.reply.id})" style= "cursor=pointer;" class="material-icons i__btn">delete</i>
+										</c:if>
 									</div>
 								</li>
 							</c:forEach>
@@ -119,14 +124,8 @@
 
 
 
-<script>
-	
-	
-
-</script>
-
 <script src = "/blog/js/detail.js"></script>
-
+<script src="/blog/js/reply.js"></script>
 
 
 
