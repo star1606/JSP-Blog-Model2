@@ -2,6 +2,22 @@
 
 ![blog](https://blogfiles.pstatic.net/MjAyMDA2MDlfMTI4/MDAxNTkxNjkxMTQ0OTc1.ZudQ-BusaNf8ZMhcNaOF7h0mgvE3omcEvsQAMgs3d5sg.zL0kT_Qc0oLLe2jlPi1BmOFlpTJU1cLCevEeHlBPLpcg.PNG.getinthere/Screenshot_19.png)
 
+> 시연 동영상 : ➡️ [링크](https://www.youtube.com/watch?v=0u4mhNbbay4)
+
+## 설명
+
+- JSP / Oracle DB를 사용한 블로그 입니다.
+- 도로명주소, SummerNote, Jsoup API를 사용하였습니다.
+- 로그인 및 회원가입
+- 게시글 페이징 기능
+- 프로필 사진 업로드 기능
+- 글쓰기, 글수정, 글삭제 기능
+- 댓글쓰기, 댓글삭제 기능
+- 유튜브 영상 주소가 있을 경우 미리보기
+
+
+
+
 ## 오라클 12C 사용자 생성
 ```sql
 alter session set "_ORACLE_SCRIPT"=true;  
